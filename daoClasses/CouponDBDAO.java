@@ -518,6 +518,8 @@ public class CouponDBDAO implements CouponDAO {
 			}
 		} catch (SQLException e) {
 			throw new CouponSystemException("Checking if COUPON already exist in the DB failed");
+		}finally{
+			ConnectionPool.getInstance().returnConnection(con);
 		}
 		return taken;
 	}

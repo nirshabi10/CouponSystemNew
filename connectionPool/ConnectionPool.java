@@ -7,6 +7,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
+
 import exceptions.CouponSystemException;
 
 public class ConnectionPool {
@@ -14,14 +15,20 @@ public class ConnectionPool {
 	private static ConnectionPool instance = new ConnectionPool();
 	private Set<Connection> connections = new HashSet<>();
 	private static final int MAX_CONNECTIONS = 10;
-	private String url = "jdbc:mysql://localhost:3306/DB1";
 	private boolean shutdownMode = false;
 
 	private ConnectionPool() {
 		for (int i = 0; i < MAX_CONNECTIONS; i++) {
 			try {
 				Class.forName("com.mysql.jdbc.Driver").newInstance();
-				Connection con = DriverManager.getConnection(url, "root", "1234");
+				String dbName = "CouponSystemDB";
+				String userName = "admin";
+				String password = "12345678";
+				String hostName = "couponsystemdb.cwuwdenpnjn3.us-east-2.rds.amazonaws.com";
+				String port = "3306";
+				
+				String url = "jdbc:mysql://" + hostName + ":" + port +"/"+ dbName + "?user=" + userName + "&password=" + password;
+				Connection con = DriverManager.getConnection(url);
 				connections.add(con);
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
@@ -67,7 +74,6 @@ public class ConnectionPool {
 					e.printStackTrace();
 				}
 			}
-
 			Iterator<Connection> it = connections.iterator();
 			Connection con = it.next();
 			it.remove();

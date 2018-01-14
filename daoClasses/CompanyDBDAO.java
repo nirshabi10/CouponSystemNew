@@ -272,6 +272,8 @@ public class CompanyDBDAO implements CompanyDAO {
 
 		} catch (SQLException e) {
 			throw new CouponSystemException("Reading the company coupons from the system failed");
+		}finally{
+			ConnectionPool.getInstance().returnConnection(con);
 		}
 		return coupons;
 	}
@@ -305,6 +307,8 @@ public class CompanyDBDAO implements CompanyDAO {
 		} catch (SQLException e) {
 			throw new CouponSystemException("Company login to the system failed");
 
+		}finally{
+			ConnectionPool.getInstance().returnConnection(con);
 		}
 
 		return loginCheck;
@@ -390,6 +394,8 @@ public class CompanyDBDAO implements CompanyDAO {
 			}
 		} catch (SQLException e) {
 			throw new CouponSystemException("Checking if company already exist in the DB failed");
+		}finally{
+			ConnectionPool.getInstance().returnConnection(con);
 		}
 		return taken;
 	}
