@@ -38,7 +38,7 @@ public class CustomerDBDAO implements CustomerDAO {
 		if (alreadyExist == false) {
 
 			Connection con = ConnectionPool.getInstance().getConnection();
-			String sql = " INSERT into Customer (CUST_NAME,PASSWORD) values(?,?)";
+			String sql = "INSERT INTO Customer (CUST_NAME,PASSWORD) VALUES(?,?)";
 			try (PreparedStatement pstmt = con.prepareStatement(sql);) {
 
 				pstmt.setString(1, customer.getCustName());
@@ -70,7 +70,7 @@ public class CustomerDBDAO implements CustomerDAO {
 	public void removeCustomer(Customer customer) throws CouponSystemException {
 		Connection con = ConnectionPool.getInstance().getConnection();
 		Customer cust = readCustomerByName(customer.getCustName());
-		String sql = " DELETE FROM Customer WHERE ID = ?";
+		String sql = "DELETE FROM Customer WHERE ID = ?";
 		try (PreparedStatement pstmt = con.prepareStatement(sql);) {
 
 			pstmt.setLong(1, cust.getId());
@@ -98,7 +98,7 @@ public class CustomerDBDAO implements CustomerDAO {
 	public void updateCustomer(Customer customer) throws CouponSystemException {
 		Connection con = ConnectionPool.getInstance().getConnection();
 		Customer cust = readCustomerByName(customer.getCustName());
-		String sql = " UPDATE  Customer SET  PASSWORD = ? WHERE ID = ?";
+		String sql = "UPDATE Customer SET PASSWORD = ? WHERE ID = ?";
 		try (PreparedStatement pstmt = con.prepareStatement(sql);) {
 			pstmt.setString(1, customer.getPassword());
 			pstmt.setLong(2, cust.getId());
@@ -126,7 +126,7 @@ public class CustomerDBDAO implements CustomerDAO {
 	@Override
 	public Customer getCustomer(long id) throws CouponSystemException {
 		Connection con = ConnectionPool.getInstance().getConnection();
-		String sql = " SELECT * FROM Customer WHERE ID = ?";
+		String sql = "SELECT * FROM Customer WHERE ID = ?";
 		Customer customer = new Customer();
 		try (PreparedStatement pstmt = con.prepareStatement(sql);) {
 
@@ -164,7 +164,7 @@ public class CustomerDBDAO implements CustomerDAO {
 	public Customer readCustomerByName(String customerName) throws CouponSystemException {
 
 		Connection con = ConnectionPool.getInstance().getConnection();
-		String sql = " SELECT * FROM Customer WHERE CUST_NAME = ?";
+		String sql = "SELECT * FROM Customer WHERE CUST_NAME = ?";
 		Customer customer = new Customer();
 		try (PreparedStatement pstmt = con.prepareStatement(sql);) {
 
@@ -201,7 +201,7 @@ public class CustomerDBDAO implements CustomerDAO {
 	@Override
 	public Collection<Customer> getAllCustomer() throws CouponSystemException {
 		Connection con = ConnectionPool.getInstance().getConnection();
-		String sql = " SELECT * FROM Customer ";
+		String sql = "SELECT * FROM Customer";
 		Collection<Customer> customers = new LinkedHashSet<>();
 		try (PreparedStatement pstmt = con.prepareStatement(sql);) {
 			ResultSet rs = pstmt.executeQuery();
@@ -241,7 +241,7 @@ public class CustomerDBDAO implements CustomerDAO {
 	@Override
 	public Collection<Coupon> getCustomerCoupons(Customer customer) throws CouponSystemException {
 		Collection<Coupon> coupons = new ArrayList<>();
-		String sql = "select * from coupon inner join customer_coupon on coupon.id = customer_coupon.coupon_id where cust_id = ?";
+		String sql = "SELECT * FROM Coupon INNER JOIN Customer_coupon ON Coupon.ID = Customer_coupon.COUPON_ID WHERE CUST_ID = ?";
 		Connection con = ConnectionPool.getInstance().getConnection();
 		try (PreparedStatement pstmt = con.prepareStatement(sql)) {
 			pstmt.setLong(1, customer.getId());
@@ -315,7 +315,7 @@ public class CustomerDBDAO implements CustomerDAO {
 	 */
 
 	public void removeCustomerCouponsFromJoin(Customer customer) throws CouponSystemException {
-		String sql = " DELETE FROM Customer_Coupon WHERE CUST_ID = ?";
+		String sql = "DELETE FROM Customer_coupon WHERE CUST_ID = ?";
 		Connection con = ConnectionPool.getInstance().getConnection();
 		try (PreparedStatement pstmt = con.prepareStatement(sql);) {
 

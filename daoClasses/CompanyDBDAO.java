@@ -39,7 +39,7 @@ public class CompanyDBDAO implements CompanyDAO {
 		if (Taken == false) {
 
 			Connection con = ConnectionPool.getInstance().getConnection();
-			String sql = " INSERT into Company (COMP_NAME,PASSWORD,EMAIL) values(?,?,?)";
+			String sql = "INSERT into Company (COMP_NAME,PASSWORD,EMAIL) values(?,?,?)";
 			try (PreparedStatement pstmt = con.prepareStatement(sql);) {
 
 				pstmt.setString(1, company.getCompName());
@@ -71,7 +71,7 @@ public class CompanyDBDAO implements CompanyDAO {
 	@Override
 	public void removeCompany(Company company) throws CouponSystemException {
 		Connection con = ConnectionPool.getInstance().getConnection();
-		String sql = " DELETE FROM Company WHERE COMP_NAME = ?";
+		String sql = "DELETE FROM Company WHERE COMP_NAME = ?";
 		try (PreparedStatement pstmt = con.prepareStatement(sql);) {
 
 			pstmt.setString(1, company.getCompName());
@@ -99,7 +99,7 @@ public class CompanyDBDAO implements CompanyDAO {
 	@Override
 	public void updateCompany(Company company) throws CouponSystemException {
 		Connection con = ConnectionPool.getInstance().getConnection();
-		String sql = " UPDATE  Company SET PASSWORD = ?, EMAIL = ? WHERE COMP_NAME = ?";
+		String sql = "UPDATE Company SET PASSWORD = ?, EMAIL = ? WHERE COMP_NAME = ?";
 		try (PreparedStatement pstmt = con.prepareStatement(sql);) {
 
 			pstmt.setString(1, company.getPassword());
@@ -132,7 +132,7 @@ public class CompanyDBDAO implements CompanyDAO {
 	@Override
 	public Company getCompany(long id) throws CouponSystemException {
 		Connection con = ConnectionPool.getInstance().getConnection();
-		String sql = " SELECT * FROM Company WHERE ID = ?";
+		String sql = "SELECT * FROM Company WHERE ID = ?";
 		Company company = new Company();
 		try (PreparedStatement pstmt = con.prepareStatement(sql);) {
 
@@ -250,7 +250,7 @@ public class CompanyDBDAO implements CompanyDAO {
 	public Collection<Coupon> getCompanyCoupons(Company company) throws CouponSystemException {
 		Collection<Coupon> coupons = new ArrayList<>();
 		Company comp = getCompanyByName(company.getCompName());
-		String sql = "select * from coupon inner join company_coupon on coupon.id = company_coupon.coupon_id where comp_id = ?";
+		String sql = "SELECT * FROM Coupon inner join Company_coupon ON Coupon.ID = Company_coupon.COUPON_ID WHERE COMP_ID = ?";
 
 		Connection con = ConnectionPool.getInstance().getConnection();
 		try (PreparedStatement pstmt = con.prepareStatement(sql)) {
@@ -326,7 +326,7 @@ public class CompanyDBDAO implements CompanyDAO {
 	 */
 
 	public void removeCouponsOfCompanyFromJoin(Company company) throws CouponSystemException {
-		String sql = " DELETE FROM Company_Coupon WHERE COMP_ID = ?";
+		String sql = "DELETE FROM Company_Coupon WHERE COMP_ID = ?";
 		Connection con = ConnectionPool.getInstance().getConnection();
 		Company comp = getCompanyByName(company.getCompName());
 		try (PreparedStatement pstmt = con.prepareStatement(sql);) {
@@ -353,7 +353,7 @@ public class CompanyDBDAO implements CompanyDAO {
 	 */
 
 	public void removeCouponsOfCompanyFromCoupon(Company company) throws CouponSystemException {
-		String sql = " DELETE FROM Coupon WHERE ID = ?";
+		String sql = "DELETE FROM Coupon WHERE ID = ?";
 		Connection con = ConnectionPool.getInstance().getConnection();
 		Collection<Coupon> coupons = new HashSet<>();
 		coupons = getCompanyCoupons(company);
