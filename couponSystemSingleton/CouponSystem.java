@@ -33,24 +33,15 @@ public class CouponSystem {
 	}
 
 	public CouponClientFacade login(String name, String password, ClientType clientType) throws CouponSystemException {
-		if (clientType.equals(ClientType.valueOf("ADMIN"))) {
-			try {
+		switch(clientType) {
+			case ADMIN:
 				return new AdminFacade().login(name, password, clientType);
-			} catch (CouponSystemException e) {
-			}
-		} else if (clientType.equals(ClientType.valueOf("COMPANY"))) {
-			try {
+			case COMPANY:
 				return new CompanyFacade().login(name, password, clientType);
-			} catch (CouponSystemException e) {
-			}
-		} else if (clientType.equals(ClientType.valueOf("CUSTOMER"))) {
-			try {
-				return new CustomerFacade().login(name, password, clientType);
-			} catch (CouponSystemException e) {
-			}
+			case CUSTOMER:
+				return new CustomerFacade().login(name, password, clientType);			
 		}
-		throw new CouponSystemException("The user name doesn't exist in the system or the password is wrong");
-
+		return null;
 	}
 
 	public void shutdown() {
