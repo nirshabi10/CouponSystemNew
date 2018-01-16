@@ -326,7 +326,7 @@ public class CompanyDBDAO implements CompanyDAO {
 	 */
 
 	public void removeCouponsOfCompanyFromJoin(Company company) throws CouponSystemException {
-		String sql = "DELETE FROM Company_Coupon WHERE COMP_ID = ?";
+		String sql = "DELETE FROM Company_coupon WHERE COMP_ID = ?";
 		Connection con = ConnectionPool.getInstance().getConnection();
 		Company comp = getCompanyByName(company.getCompName());
 		try (PreparedStatement pstmt = con.prepareStatement(sql);) {
