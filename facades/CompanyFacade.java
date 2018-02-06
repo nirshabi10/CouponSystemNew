@@ -131,7 +131,15 @@ public class CompanyFacade implements CouponClientFacade {
 	 */
 
 	public Collection<Coupon> getCouponsByType(CouponType type) throws CouponSystemException {
-		return couponDB.getCouponByType(type);
+		Collection<Coupon> coupons = new HashSet<>();
+		coupons = companyDB.getCompanyCoupons(this.thisCompany);
+		Collection<Coupon> coupons2 = new HashSet<>();
+		for (Coupon coupon : coupons) {
+			if (coupon.getType().equals(type)) {
+				coupons2.add(coupon);
+			}
+		}
+		return coupons2;
 
 	}
 
@@ -147,7 +155,15 @@ public class CompanyFacade implements CouponClientFacade {
 	 */
 
 	public Collection<Coupon> getCouponsByPrice(double price) throws CouponSystemException {
-		return couponDB.getCouponUpToPrice(price);
+		Collection<Coupon> coupons = new HashSet<>();
+		coupons = companyDB.getCompanyCoupons(this.thisCompany);
+		Collection<Coupon> coupons2 = new HashSet<>();
+		for (Coupon coupon : coupons) {
+			if (coupon.getPrice()<=price) {
+				coupons2.add(coupon);
+			}
+		}
+		return coupons2;
 
 	}
 

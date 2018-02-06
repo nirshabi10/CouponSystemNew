@@ -256,7 +256,7 @@ public class CouponDBDAO implements CouponDAO {
 	 *             coupons.
 	 */
 	@Override
-	public Collection<Coupon> getCouponByType(CouponType type) throws CouponSystemException {
+	public Collection<Coupon> getCouponByType (CouponType type) throws CouponSystemException {
 		Connection con = ConnectionPool.getInstance().getConnection();
 		String sql = "SELECT * FROM Coupon WHERE TYPE = ? ";
 		Collection<Coupon> coupons = new LinkedHashSet<>();
